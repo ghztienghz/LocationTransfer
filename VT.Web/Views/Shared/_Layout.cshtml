@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css-slider/slider-pro.min.css" rel="stylesheet" />
+    <style>
+        .sp-thumbnail {
+            background: #F0F0F0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-top">
+                <div class="row">
+                    <div class="H-pull-left">
+                        <a href="/">
+                            <img src="~/Content/Images/Logo_White.png" alt="Sang nhượng 123" title="Sang nhượng 123" />
+                        </a>
+                    </div>
+                    <div class="H-pull-right">
+                        <div class="H-form-search">
+                            <form>
+                                <div class="H-form-s-input">
+                                    <input type="text" name="txtSearch" placeholder="Tìm kiếm mọi thứ bạn cần..." class="H-f-s-control-text" />
+                                    <button class="H-f-s-control-button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="H-box-user-func">
+                            <ul class="H-ul-user-func">
+                                <li>
+                                    <a href="@Url.Action("PostItem", "Post")">Đăng tin</a>
+                                </li>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Login", "Account")">Đăng nhập</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Register", "Account")">Đăng ký</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Manager","Account")">QL.Tài khoản</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Logout","Account")">Đăng xuất</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <div class="row">
+                    <ul class="menu-page">
+                        <li>
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li>
+                            <a href="#">Giới thiệu</a>
+                        </li>
+                        <li>
+                            <a href="#">Liên hệ</a>
+                        </li>
+                        <li>
+                            <a href="#">Chính sách</a>
+                        </li>
+                        <li>
+                            <a href="#">Bảng giá</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+    @RenderBody()
+    <footer class="container">
+        <div class="footer-title"></div>
+        <div class="row">
+            <div class="footer-pull-left">
+                <img src="~/Content/Images/Logo_New_Coppyright.png" alt="Sang nhượng" />
+                <br />
+                <span>Giấy chứng nhận ĐKKD 0313387690 Do Sở Kế Hoạch Và Đầu Tư cấp.</span>
+                <br />
+                <span>Hotline: 0906.890.039</span>
+                <br />
+                <span>Địa chỉ mail: <a href="mailto:hotro@sangnhuong.com.vn">hotro@sangnhuong.com.vn</a> | Website:<a href="www.sangnhuong.com.vn">www.sangnhuong.com.vn</a></span>
+                <br />
+                <span>Văn phòng: 18 Tăng Bạt Hổ, Quận Bình Thạnh, TP. Hồ Chí Minh</span>
+            </div>
+            <div class="footer-pull-right">
+                <div class="footer-pull-right-menu-footer">
+                    <div class="ST-a-l-menu-top-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang tiệm giặt ủi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang nhượng CLB thể hình</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang sạp - kios</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang quán ++ +</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-pull-right-menu-footer">
+                    <div class="ST-a-l-menu-top-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang tiệm giặt ủi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang nhượng CLB thể hình</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang sạp - kios</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang quán ++ +</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-pull-right-menu-footer">
+                    <div class="ST-a-l-menu-top-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang tiệm giặt ủi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang nhượng CLB thể hình</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang sạp - kios</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <em class="fa fa-caret-right"></em>
+                                    <span>Sang quán ++ +</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="info-user-build">
+                <span>
+                    Copyright 2013 by <a href="www.sangnhuong.com.vn">www.sangnhuong.com.vn</a>
+                </span>
+                <span>
+                    Làm web vui lòng gọi: <a href="tel:01673798150">01673798150</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/js-slider/jquery.sliderPro.min.js"></script>
+    <script src="~/Scripts/js-slider/jquery.sliderPro.fullScreen.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $('#example1').sliderPro({
+                width: 832,
+                height: 500,
+                autoplay: true,
+                autoplayDelay: 4000,
+                fullScreen: true,
+                arrows: true,
+                buttons: false,
+                waitForLayers: true,
+                thumbnailWidth: 200,
+                thumbnailHeight: 100,
+                thumbnailPointer: true,
+                autoScaleLayers: false,
+                breakpoints: {
+                    500: {
+                        thumbnailWidth: 120,
+                        thumbnailHeight: 50
+                    }
+                }
+            });
+        });
+    </script>
+    @RenderSection("Scripts",false)
+    <script src="~/Scripts/respond.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</body>
+</html>

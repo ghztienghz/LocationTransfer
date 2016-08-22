@@ -1,0 +1,245 @@
+﻿@using VT.Model.ViewModel;
+@using VT.Model.Ultil;
+@model PostItemViewModel
+@{
+    ViewBag.Title = "Đăng bài viết";
+}
+@Html.Hidden("urlpage", Url.Action("GetArea", "Account"), new { id = "get-area-cbo" })
+<div class="container">
+    <div class="row">
+        <div class="container-box-title-post">
+            <div class="box-title-post">
+                <div class="item-price-box">
+                    <ul>
+                        <li><span>TIN VIP</span></li>
+                        <li><span>( Miễn phí đăng tin</span></li>
+                        <li><span>cho tin dưới 35tr )</span></li>
+                        <li><span>199 ngàn</span></li>
+                    </ul>
+                </div>
+                <div class="item-price-box">
+                    <ul>
+                        <li><span>TIN HOT</span></li>
+                        <li><span style="text-decoration:line-through;">299 ngàn</span></li>
+                        <li><span>giảm 15%</span></li>
+                        <li><span>249 ngàn</span></li>
+                    </ul>
+                </div>
+                <div class="item-price-box">
+                    <ul>
+                        <li><span>TIN VIP</span></li>
+                        <li><span>( Miễn phí đăng tin</span></li>
+                        <li><span>cho tin dưới 35tr )</span></li>
+                        <li><span>199 ngàn</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-box-post">
+            @using (Html.BeginForm("PostItem", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" , enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4 style="text-align: center; font-size: 25px; color: #888888; margin: 20px 0px;">Tạo mới một bài đăng.</h4>
+                <hr />
+                <br />
+                <br />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(x => x.Lat)
+                @Html.HiddenFor(x => x.Lng)
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IdType)
+                    <div class="group-by">
+                        @Html.DropDownListFor(m => m.IdType, Model.lstDropdownType, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.IdType)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IdTypeNews)
+                    <div class="group-by">
+                        @Html.DropDownListFor(m => m.IdTypeNews, Model.lstDropdownTypeNews, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.IdTypeNews)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Unit)
+                    <div class="group-by">
+                        @Html.RadioButtonFor(m => m.Unit, (int)EnumCore.Unit.Trieu, new { @class = "radio_trieu", @checked = "checked" }) Triệu
+                        @Html.RadioButtonFor(m => m.Unit, (int)EnumCore.Unit.Ty, new { @class = "radio_ty" }) Tỷ
+                        @Html.ValidationMessageFor(x => x.Unit)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Price)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Vd: đơn vị tính (triệu) => nhập 100 = 100 triệu", onlick = "this.innerText = ''" })
+                        @Html.ValidationMessageFor(x => x.Price)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Title)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Title)
+                    </div>
+                </div>
+                <div class="form-group" style="height: 120px;">
+                    @Html.LabelFor(m => m.Description)
+                    <div class="group-by">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", style = "height: 114px; padding-top: 5px;" })
+                        @Html.ValidationMessageFor(x => x.Description)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NameContact)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.NameContact, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.NameContact)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneContact)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.PhoneContact, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.PhoneContact)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IdProvince)
+                    <div class="group-by">
+                        @Html.DropDownListFor(m => m.IdProvince, Model.DropDownProvince, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.IdTypeNews)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IdDistrict)
+                    <div class="group-by">
+                        @Html.DropDownListFor(m => m.IdDistrict, Model.DropDownDistrict, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.IdDistrict)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IdWard)
+                    <div class="group-by">
+                        @Html.DropDownListFor(m => m.IdWard, Model.DropDownWard, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.IdWard)
+                    </div>
+                </div>
+                <div class="form-group" id="last-address" style="display:none;height: 150px;">
+                    @Html.LabelFor(m => m.FullAddress)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.FullAddress, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.FullAddress)
+                    </div>
+                    <div class="group-by" style="margin-bottom: 30px;">
+                        <p style="margin-top:20px;">
+                            Chức năng này cho phép người dùng tìm kiếm với chất lượng chính xác nhất, trực quan, dễ hiểu.
+                            Chức năng định vị chỉ mang tính tương đối.
+                            Phù hợp nhất trên thiết bị di động có chức năng GPS.
+                            Bạn vui lòng chờ cho Google Maps tải hết dữ liệu rồi hãy nhấn đăng ký
+                        </p>
+                        <button type="button" onclick="InitGeolocation();" style="margin:5px 0px; padding:5px; cursor:pointer;">Định vị vị trí trên Trình duyệt hoặc GPS</button>
+                    </div>
+                </div>
+                <div class="google-map" id="map">
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Model)
+                    <div class="group-by">
+                        @Html.EditorFor(x => x.Model)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Location)
+                    <div class="group-by">
+                        @Html.EditorFor(x => x.Location)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RoomNum)
+                    <div class="group-by">
+                        @for (int i = 1; i < 8; i++)
+                        {
+                            if (i == 7)
+                            {
+                                @Html.RadioButtonFor(x => x.RoomNum, i + "+", new { style = "width: 20px;height: 20px;" }) <span style="display:inline-block; font-size:20px;margin-right: 10px;">@(i + "+")</span>
+                            }
+                            else
+                            {
+                                @Html.RadioButtonFor(x => x.RoomNum, i, new { style = "width: 20px;height: 20px;" }) <span style="display:inline-block; font-size:20px;margin-right: 10px;">@i</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Toilet)
+                    <div class="group-by">
+                        @for (int i = 1; i < 8; i++)
+                        {
+                            if (i == 7)
+                            {
+                                @Html.RadioButtonFor(x => x.Toilet, i + "+", new { style = "width: 20px;height: 20px;" }) <span style="display:inline-block; font-size:20px;margin-right: 10px;">@(i + "+")</span>
+                            }
+                            else
+                            {
+                                @Html.RadioButtonFor(x => x.Toilet, i, new { style = "width: 20px;height: 20px;" }) <span style="display:inline-block; font-size:20px;margin-right: 10px;">@i</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Horizontal)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.Horizontal, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Vertical)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.Vertical, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Exprires)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.Exprires, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MetaSeoKeyword)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.MetaSeoKeyword, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MetaSeoDescription)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.MetaSeoDescription, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Files)
+                    <div class="group-by">
+                        @Html.TextBoxFor(x => x.Files, new { @class = "form-control", type="file", multiple = "", accept = "image/png,image/gif,image/jpeg" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group-by">
+                        <input type="submit" class="btn-submit" value="Đăng tin" />
+                    </div>
+                </div>
+                <div class="review-file-img">
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87ai8ZCRfdENwDnzxGVVhCRZ-BdP6fOs&sensor=true&libraries=places" async defer></script>
+    <script src="~/Scripts/Client/PostItem.js"></script>
+    <script src="~/Scripts/Client/GoogleMap.js"></script>
+}

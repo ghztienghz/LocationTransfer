@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Giao diện quản lý";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="manager-user-ui-main-left">
+            <div class="item-user-dashboard">
+                <a href="@Url.Action("PayCard", "Manage")">
+                    <i class="fa fa-credit-card fa-3x"></i>
+                    <span>Nạp thẻ cào</span>
+                </a>
+            </div>
+            <div class="item-user-dashboard">
+                <a href="#">
+                    <i class="fa fa-edit fa-3x"></i>
+                    <span>Đăng tin sang nhượng</span>
+                </a>
+            </div>
+            <div class="item-user-dashboard">
+                <a href="#">
+                    <i class="fa fa-cogs fa-3x"></i>
+                    <span>Quản lý tin sang nhượng</span>
+                </a>
+            </div>
+            <div class="item-user-dashboard">
+                <a href="#">
+                    <i class="fa fa-money fa-3x"></i>
+                    <span>Quản lý thẻ cào</span>
+                </a>
+            </div>
+        </div>
+        <div class="manager-user-ui-main-right">
+            <div class="wrap-info-main-dashboard">
+                <img src="~/Content/Images/no_avatar.gif" alt="Ảnh đại diện" />
+                <p>Tên: Nguyễn Văn Tiến</p>
+                <p>Địa chỉ: Thành phố HCM</p>
+                <p>Phone: 01283402377</p>
+            </div>
+            <a class="btn" href="@Url.Action("SettingAccount", "Manage")">Chỉnh sửa thông tin</a>
+        </div>
+    </div>
+</div>

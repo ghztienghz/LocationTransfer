@@ -1,0 +1,52 @@
+﻿@using VT.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Thanh toán bằng hình thức nạp thẻ";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="pay-card-pull-left">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                    <div class="group-by">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                    <div class="group-by">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group-by">
+                        <input type="submit" class="btn-submit" value="Thanh toán" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="pay-card-pull-right">
+            <article class="PC-article-policy">
+                <div class="PC-a-l-title">
+                </div>
+                <div class="PC-a-l-show-polyci">
+                    <p>
+                        Hiện tại chúng tôi chỉ hỗ trợ thanh toán bằng thẻ cào dành cho TIN VIP.
+                    </p>
+                    <p>
+                        Vui lòng nạp thẻ mệnh giá 200,000 VND của các nhà mạng Mobifone, Vinafone, Viettel, Gate.
+                    </p>
+                    <p>
+                        Vui lòng gọi hỗ trợ nếu quý khách cần thanh toán cho TIN HOT và TIN ĐẶC BIỆT.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+

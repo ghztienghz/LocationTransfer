@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Danh mục thể loại";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="page-detail-left">
+            <div class="box-menu-horizontal">
+                <ul>
+                    <li><a href="#">Sang quán cafe »</a></li>
+                    <li><a href="#">Nhà hàng »</a></li>
+                    <li><a href="#">Quán ăn »</a></li>
+                    <li><a href="#">SANG QUÁN ĂN MIỆT VƯỜN BÌNH QUỚI</a></li>
+                </ul>
+            </div>
+            <div class="box-item-category-news">
+                <ul class="ul-show-news-hot">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <li>
+                            <div class="item-news-host-img">
+                                <img src="/Content/Images/item.jpg" alt="News-Hot">
+                            </div>
+                            <div class="item-news-host-price">
+                                <span>200 Triệu</span>
+                            </div>
+                            <div class="item-news-host-content">
+                                <b>Sang gấp quán nhậu 79 trên đường Phạm Văn Đồng Quận Bình Thạnh</b>
+                                <span>Sang quán nhậu - Q. Bình Thạnh - TP. HCM</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+                <div class="nav-page-container">
+                    <span>Trang 1 của 6 trang</span>
+                    <ul>
+                        <li>
+                            <a href="#">Đầu tiên</a>
+                        </li>
+                        <li>
+                            <a href="#">Lui</a>
+                        </li>
+                        <li>
+                            <a href="#" class="active">[1]</a>
+                        </li>
+                        <li>
+                            <a href="#">2</a>
+                        </li>
+                        <li>
+                            <a href="#">3</a>
+                        </li>
+                        <li>
+                            <a href="#">4</a>
+                        </li>
+                        <li>
+                            <a href="#">5</a>
+                        </li>
+                        <li>
+                            <a href="#">6</a>
+                        </li>
+                        <li>
+                            <a href="#">Tới</a>
+                        </li>
+                        <li>
+                            <a href="#">Cuối cùng</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="box-item-relationship">
+                <div class="ST-a-l-title">
+                    <span>Tin cùng danh mục</span>
+                </div>
+                <div class="ST-a-l-arrow-down">
+                    <i class="fa fa-caret-down fa-2x"></i>
+                </div>
+                <div class="SM-article-middle-left-content">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <a href="#">
+                            <div class="SM-content-item-in-article">
+                                <div class="SM-c-i-in-a-img-box">
+                                    <div class="SM-c-i-in-a-img" style="background:url('/Content/Images/item.jpg')"></div>
+                                </div>
+                                <div class="SM-c-i-in-a-text-box">
+                                    <span>
+                                        Cần sang gấp quán Cơm Tắm Minh Nhật trên đường Nguyễn Tiểu La Quận 10
+                                    </span>
+                                </div>
+                                <div class="SM-c-i-in-a-box-price">
+                                    <b><i class="fa fa-bullhorn"></i>100 triệu</b>
+                                    <b><i class="fa fa-fort-awesome"></i> Quận 10</b>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+        <article class="SM-article-middle-right item-show-vip-in-detail">
+            @for (int i = 0; i < 6; i++)
+            {
+                <a href="#">
+                    <div class="item-vip-top10">
+                        <div class="item-vip-top10-box-img">
+                            <div class="item-vip-top10-box-img-data" style="background:url('/Content/Images/item.jpg') no-repeat">
+                            </div>
+                        </div>
+                        <div class="item-vip-top10-box-text">
+                            <span>Cần sang nhà hàng ẩm thực Bắc - đường Tú Xương, trung tâm Quận 3</span>
+                        </div>
+                    </div>
+                </a>
+            }
+        </article>
+    </div>
+</div>
