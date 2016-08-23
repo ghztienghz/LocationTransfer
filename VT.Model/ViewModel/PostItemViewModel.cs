@@ -29,8 +29,7 @@ namespace VT.Model.ViewModel
         [Display(Name = "Tỉnh - TP")]
         [RegularExpression("[0-9]+", ErrorMessage = "Chưa chọn tỉnh - thành")]
         public long IdProvince { get; set; }
-        public string PovinceName { get; set; }
-
+        public string ProvinceName { get; set; }
         [Required(ErrorMessage = "Không được bỏ trống quận huyện")]
         [Display(Name = "Quận - Huyện")]
         [RegularExpression("[0-9]+", ErrorMessage = "Chưa chọn quận - huyện")]
@@ -100,12 +99,14 @@ namespace VT.Model.ViewModel
         public string FriendlyUrl { get; set; }
         public string MetaAuthor { get; set; }
         [Required(ErrorMessage = "Không được bỏ trống từ khoá dành cho SEO")]
-        [Display(Name = "Từ khoá SEO google")]
+        [Display(Name = "Từ khoá SEO(tìm kếm google dễ thấy bài đăng của bạn hơn)")]
         [MaxLength(100,ErrorMessage ="Tối đa 100 ký tự")]
         public string MetaSeoKeyword { get; set; }
         [Required(ErrorMessage = "Không được bỏ trống mô tả dành cho SEO")]
-        [Display(Name = "Từ khoá mô tả")]
+        [Display(Name = "Từ khoá mô tả(giúp người dùng hiểu rõ vấn đề)")]
         [MaxLength(200, ErrorMessage = "Tối đa 150 ký tự")]
+
+        public long CountView { get; set; }
         public string MetaSeoDescription { get; set; }
 
         public IEnumerable<SelectListItem> lstDropdownType { get; set; }

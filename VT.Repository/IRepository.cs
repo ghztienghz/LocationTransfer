@@ -17,6 +17,8 @@ namespace VT.Repository
 
         TEntity AddObject(TEntity obj);
 
+        IEnumerable<TEntity> AddRangeObject(IEnumerable<TEntity> multiObject);
+
         TEntity UpdateObject(TEntity obj);
 
         TEntity DeleteObject(TEntity obj);

@@ -14,7 +14,26 @@ namespace VT.Model.Ultil
             LoaiTin = 2,
             DonViTinh = 3,
             MoHinh = 5,
-            ViTri = 6
+            ViTri = 6,
+            TrangThaiBaiViet = 7,
+            LoaiMedia = 8
+        }
+
+        public enum TypeMediaContent : int
+        {
+            HinhAnhBaiDang = 20
+        }
+
+        public enum StatusMediaContent : int
+        {
+            ChoPhep = 1,
+            Huy = 0
+        }
+
+        public enum StatusObjectType : int
+        {
+            KichHoat = 1,
+            Huy = 0
         }
         public enum LoaiTin : int
         {

@@ -16,6 +16,7 @@ namespace VT.Services
         PostItem FindObject(Expression<Func<PostItem, bool>> func);
 
         PostItem AddObject(PostItem obj);
+        IEnumerable<PostItem> AddRangeObject(IEnumerable<PostItem> multiObject);
 
         PostItem UpdateObject(PostItem obj);
 

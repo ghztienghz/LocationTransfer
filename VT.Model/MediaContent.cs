@@ -15,8 +15,13 @@ namespace VT.Model
     public partial class MediaContent
     {
         public long Id { get; set; }
+        public long ObjectTypeId { get; set; }
+        public string ObjectName { get; set; }
         public long IdType { get; set; }
-        public long TypeName { get; set; }
+        public string TypeName { get; set; }
+        public long IdItem { get; set; }
+        public string ItemName { get; set; }
+        public bool Active { get; set; }
         public string Urlthumbnail { get; set; }
         public string UrlFull { get; set; }
         public string Link { get; set; }

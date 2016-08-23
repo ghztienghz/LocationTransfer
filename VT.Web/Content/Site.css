@@ -267,7 +267,7 @@ ul {
     margin-right: 2%;
     margin-bottom: 15px;
     float: left;
-    height: 230px;
+    height: 250px;
     background: #eaeaea;
 }
 
@@ -337,10 +337,13 @@ ul {
 
     .SM-c-i-in-a-box-price > b:first-child {
         float: left;
+        display:block;
     }
 
     .SM-c-i-in-a-box-price > b:last-child {
-        float: right;
+        float: left;
+        display:block;
+        margin-top: 5px;
     }
 
 .SM-article-middle-left-middle {
@@ -1113,6 +1116,7 @@ form > .form-group {
     border-bottom: 1px solid #CCC;
     border-right: 1px solid #CCC;
     text-align: center;
+    padding-top: 18px;
 }
 
 .location-infor-social > .location-infor-social-item:first-child {

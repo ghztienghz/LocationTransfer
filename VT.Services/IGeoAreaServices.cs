@@ -16,6 +16,7 @@ namespace VT.Services
         GeoArea FindObject(Expression<Func<GeoArea, bool>> func);
 
         GeoArea AddObject(GeoArea obj);
+        IEnumerable<GeoArea> AddRangeObject(IEnumerable<GeoArea> multiObject);
 
         GeoArea UpdateObject(GeoArea obj);
 

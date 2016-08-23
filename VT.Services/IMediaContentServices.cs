@@ -16,6 +16,7 @@ namespace VT.Services
         MediaContent FindObject(Expression<Func<MediaContent, bool>> func);
 
         MediaContent AddObject(MediaContent obj);
+        IEnumerable<MediaContent> AddRangeObject(IEnumerable<MediaContent> multiObject);
 
         MediaContent UpdateObject(MediaContent obj);
 

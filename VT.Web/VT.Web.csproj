@@ -260,6 +260,7 @@
     <Content Include="Content\Images\qc1.png" />
     <Content Include="Content\Images\qc2.png" />
     <Content Include="Scripts\Client\GoogleMap.js" />
+    <Content Include="Scripts\Client\Location-Details.js" />
     <Content Include="Scripts\Client\PostItem.js" />
     <Content Include="Scripts\Client\RegisterView.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.js" />
@@ -379,7 +380,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52722</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50378/</IISUrl>
+          <IISUrl>http://localhost:50379/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

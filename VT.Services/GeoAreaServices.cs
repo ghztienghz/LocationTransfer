@@ -22,6 +22,11 @@ namespace VT.Services
             return Geo.AddObject(obj);
         }
 
+        public IEnumerable<GeoArea> AddRangeObject(IEnumerable<GeoArea> multiObject)
+        {
+            return Geo.AddRangeObject(multiObject);
+        }
+
         public GeoArea DeleteObject(GeoArea obj)
         {
             return Geo.DeleteObject(obj);

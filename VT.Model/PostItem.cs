@@ -51,5 +51,6 @@ namespace VT.Model
         public Nullable<double> Horizontal { get; set; }
         public Nullable<double> Vertical { get; set; }
         public string FullAddress { get; set; }
+        public long CountView { get; set; }
     }
 }

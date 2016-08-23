@@ -141,7 +141,10 @@
     <Compile Include="Ultil\EnumCore.cs" />
     <Compile Include="Ultil\GeoCodeGoogleMaps.cs" />
     <Compile Include="Ultil\Ultil.cs" />
+    <Compile Include="Ultil\XObjectConvertToYObject.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\HomeIndexViewModel.cs" />
+    <Compile Include="ViewModel\LocationViewModel.cs" />
     <Compile Include="ViewModel\PostItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

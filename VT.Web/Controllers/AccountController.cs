@@ -162,7 +162,7 @@ namespace VT.Web.Controllers
         [AllowAnonymous]
         public ActionResult GetArea(long id)
         {
-            object obj = GetGeoServices.FindAllObject(x => x.AreaParentId == id).Select(x => new
+            object obj = GetGeoServices.FindAllObject(x => x.AreaParentId == id).OrderBy(x=>x.AreaName).Select(x => new
             {
                 AreaId = x.AreaID,
                 AreaName = (x.AreaTypeName != null ? x.AreaTypeName.ToLower() : "") + " " + x.AreaName

@@ -16,6 +16,7 @@ namespace VT.Services
         ObjectType FindObject(Expression<Func<ObjectType, bool>> func);
 
         ObjectType AddObject(ObjectType obj);
+        IEnumerable<ObjectType> AddRangeObject(IEnumerable<ObjectType> multiObject);
 
         ObjectType UpdateObject(ObjectType obj);
 

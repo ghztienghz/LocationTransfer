@@ -21,6 +21,11 @@ namespace VT.Services
             return ObjectType.AddObject(obj);
         }
 
+        public IEnumerable<ObjectType> AddRangeObject(IEnumerable<ObjectType> multiObject)
+        {
+            return ObjectType.AddRangeObject(multiObject);
+        }
+
         public ObjectType DeleteObject(ObjectType obj)
         {
             return ObjectType.DeleteObject(obj);

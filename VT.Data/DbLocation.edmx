@@ -91,10 +91,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ObjectTypeId" Type="bigint" Nullable="false" />
+          <Property Name="ObjectName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdType" Type="bigint" Nullable="false" />
-          <Property Name="TypeName" Type="bigint" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdItem" Type="bigint" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Urlthumbnail" Type="nvarchar" MaxLength="500" />
-          <Property Name="UrlFull" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="UrlFull" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Link" Type="nvarchar" MaxLength="500" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
@@ -148,6 +153,7 @@
           <Property Name="Horizontal" Type="float" />
           <Property Name="Vertical" Type="float" />
           <Property Name="FullAddress" Type="nvarchar" MaxLength="2500" Nullable="false" />
+          <Property Name="CountView" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Types">
           <Key>
@@ -291,7 +297,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="LocationModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="LocationModel.AspNetUser" />
           <EntitySet Name="GeoAreas" EntityType="LocationModel.GeoArea" />
-          <EntitySet Name="MediaContents" EntityType="LocationModel.MediaContent" />
           <EntitySet Name="ObjectTypes" EntityType="LocationModel.ObjectType" />
           <EntitySet Name="PostItems" EntityType="LocationModel.PostItem" />
           <EntitySet Name="Types" EntityType="LocationModel.Type" />
@@ -315,6 +320,7 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="MediaContents" EntityType="LocationModel.MediaContent" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -395,18 +401,6 @@
           <Property Name="AreaProvineId" Type="Int32" />
           <Property Name="AreaParentId" Type="Int32" />
         </EntityType>
-        <EntityType Name="MediaContent">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdType" Type="Int64" Nullable="false" />
-          <Property Name="TypeName" Type="Int64" Nullable="false" />
-          <Property Name="Urlthumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="UrlFull" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="ObjectType">
           <Key>
             <PropertyRef Name="Id" />
@@ -458,6 +452,7 @@
           <Property Name="Horizontal" Type="Double" />
           <Property Name="Vertical" Type="Double" />
           <Property Name="FullAddress" Type="String" Nullable="false" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <Property Name="CountView" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Type">
           <Key>
@@ -532,6 +527,23 @@
           <End Type="LocationModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="LocationModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="MediaContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObjectTypeId" Type="Int64" Nullable="false" />
+          <Property Name="ObjectName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdType" Type="Int64" Nullable="false" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdItem" Type="Int64" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Urlthumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UrlFull" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -614,19 +626,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MediaContents">
-            <EntityTypeMapping TypeName="LocationModel.MediaContent">
-              <MappingFragment StoreEntitySet="MediaContents">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="UrlFull" ColumnName="UrlFull" />
-                <ScalarProperty Name="Urlthumbnail" ColumnName="Urlthumbnail" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-                <ScalarProperty Name="IdType" ColumnName="IdType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ObjectTypes">
             <EntityTypeMapping TypeName="LocationModel.ObjectType">
               <MappingFragment StoreEntitySet="ObjectTypes">
@@ -640,6 +639,7 @@
           <EntitySetMapping Name="PostItems">
             <EntityTypeMapping TypeName="LocationModel.PostItem">
               <MappingFragment StoreEntitySet="PostItems">
+                <ScalarProperty Name="CountView" ColumnName="CountView" />
                 <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
                 <ScalarProperty Name="Vertical" ColumnName="Vertical" />
                 <ScalarProperty Name="Horizontal" ColumnName="Horizontal" />
@@ -703,6 +703,24 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="MediaContents">
+            <EntityTypeMapping TypeName="LocationModel.MediaContent">
+              <MappingFragment StoreEntitySet="MediaContents">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="UrlFull" ColumnName="UrlFull" />
+                <ScalarProperty Name="Urlthumbnail" ColumnName="Urlthumbnail" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="IdItem" ColumnName="IdItem" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+                <ScalarProperty Name="ObjectTypeId" ColumnName="ObjectTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,4 +1,11 @@
 ﻿$(function () {
+
+    $('#Title').keyup(function () {
+        var title = $(this).val();
+        $('#MetaSeoKeyword').val(title);
+        $('#MetaSeoDescription').val(title);
+    });
+    // giá tiền thay đổi
     $('#Price').keyup(function (e) {
         var price = parseFloat($(this).val());
         if ((price / 1000) >= 1) {

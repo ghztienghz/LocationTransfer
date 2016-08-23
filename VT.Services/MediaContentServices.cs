@@ -21,6 +21,11 @@ namespace VT.Services
             return Media.AddObject(obj);
         }
 
+        public IEnumerable<MediaContent> AddRangeObject(IEnumerable<MediaContent> multiObject)
+        {
+            return Media.AddRangeObject(multiObject);
+        }
+
         public MediaContent DeleteObject(MediaContent obj)
         {
             return Media.DeleteObject(obj);

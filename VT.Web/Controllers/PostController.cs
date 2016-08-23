@@ -23,11 +23,13 @@ namespace VT.Web.Controllers
         private readonly IGeoAreaServices GetGeoServices;
         private readonly ITypeServices TypeServices;
         private readonly IPostItemServices PostItemServices;
-        public PostController(IGeoAreaServices _GetGeoServices, ITypeServices _TypeServices, IPostItemServices _PostItemServices)
+        private readonly IMediaContentServices MediaContentService;
+        public PostController(IGeoAreaServices _GetGeoServices, ITypeServices _TypeServices, IPostItemServices _PostItemServices, IMediaContentServices _MediaContentService)
         {
             this.GetGeoServices = _GetGeoServices;
             this.TypeServices = _TypeServices;
             this.PostItemServices = _PostItemServices;
+            this.MediaContentService = _MediaContentService;
         }
         // GET: Post
         public ActionResult Index()
@@ -53,7 +55,7 @@ namespace VT.Web.Controllers
             lstDropDownWard.Add(new SelectListItem { Selected = true, Text = "Chọn Phường - Xã" });
             vm.DropDownDistrict = lstDropDownDistrict;
             vm.DropDownWard = lstDropDownWard;
-            vm.lstDropdownType = TypeServices.FindAllObject(x => x.ObjectTypeId == (int)EnumCore.ObjectTypeId.DanhMuc).Select(x=>new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            vm.lstDropdownType = TypeServices.FindAllObject(x => x.ObjectTypeId == (int)EnumCore.ObjectTypeId.DanhMuc).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             vm.lstDropdownTypeNews = TypeServices.FindAllObject(x => x.ObjectTypeId == (int)EnumCore.ObjectTypeId.LoaiTin).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             vm.Model = TypeServices.FindAllObject(x => x.ObjectTypeId == (int)EnumCore.ObjectTypeId.MoHinh).Select(x => new ItemCheckBox { Name = x.Name, Id = x.Id }).ToList();
             vm.Location = TypeServices.FindAllObject(x => x.ObjectTypeId == (int)EnumCore.ObjectTypeId.ViTri).Select(x => new ItemCheckBox { Name = x.Name, Id = x.Id }).ToList();
@@ -66,9 +68,9 @@ namespace VT.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (vm.Files == null || vm.Files.Count <=0)
+                if (vm.Files == null || vm.Files.Count <= 0)
                 {
-                    ModelState.AddModelError("","Phải tải lên server từ 1-6 tấm ảnh cho bài đăng");
+                    ModelState.AddModelError("", "Phải tải lên server từ 1-6 tấm ảnh cho bài đăng");
                     goto goCode;
                 }
 
@@ -78,7 +80,7 @@ namespace VT.Web.Controllers
                     GeoArea areaProvince = GetGeoServices.FindObject(x => x.AreaID == vm.IdProvince);
                     if (areaProvince == null)
                     {
-                        ModelState.AddModelError("","Tỉnh - TP không tồn tại");
+                        ModelState.AddModelError("", "Tỉnh - TP không tồn tại");
                         goto goCode;
                     }
                     GeoArea areaDistrict = GetGeoServices.FindObject(x => x.AreaID == vm.IdDistrict);
@@ -94,7 +96,7 @@ namespace VT.Web.Controllers
                         goto goCode;
                     }
                     // kiểm tra thể loại menu
-                    VT.Model.Type typeMenu = TypeServices.FindObject(x=>x.Id == vm.IdType);
+                    VT.Model.Type typeMenu = TypeServices.FindObject(x => x.Id == vm.IdType);
                     if (typeMenu == null)
                     {
                         ModelState.AddModelError("", "Menu bạn chọn không tồn tại");
@@ -122,7 +124,7 @@ namespace VT.Web.Controllers
                         if (item.Checked)
                         {
                             var type = TypeServices.FindObject(x => x.Id == item.Id);
-                            if(type!=null)
+                            if (type != null)
                                 lstModel.Add(type);
                         }
                     }
@@ -136,7 +138,7 @@ namespace VT.Web.Controllers
                         if (item.Checked)
                         {
                             var type = TypeServices.FindObject(x => x.Id == item.Id);
-                            if(type!=null)
+                            if (type != null)
                                 lstLocation.Add(type);
                         }
                     }
@@ -158,7 +160,8 @@ namespace VT.Web.Controllers
                                 Image img = Image.FromStream(file.InputStream);
                                 Size size = new Size(250, 250);
                                 //string fileThumb = Ultil.CreateThumbnail(img, size, Server, newName);
-                                string fileThumb = Ultil.GetThumbImg(newName,Server);
+                                //string fileThumb = Ultil.GetThumbImg(new Size(300,300),newName,Server);
+                                string fileThumb = Ultil.GenerateThumbImg(new Size(170, 140), newName, Server);
                                 if (fileThumb != null)
                                 {
                                     lstImgForItem.Add(fileFullSize, fileThumb);
@@ -178,7 +181,7 @@ namespace VT.Web.Controllers
                     post.IdTypeParent = null;
                     post.TypeParentName = null;
                     post.IdProvince = areaProvince.AreaID;
-                    post.ProvinceName = areaProvince.AreaTypeName +" "+ areaProvince.AreaName;
+                    post.ProvinceName = areaProvince.AreaTypeName + " " + areaProvince.AreaName;
 
                     post.IdDistrict = areaDistrict.AreaID;
                     post.DistrictName = areaDistrict.AreaTypeName + " " + areaDistrict.AreaName;
@@ -194,7 +197,7 @@ namespace VT.Web.Controllers
                     // tạo xml
                     foreach (var item in lstModel)
                     {
-                        strModel += string.Format("<Item><Id>{0}</Id><Name>{1}</Name></Item>", item.Id,item.Name);
+                        strModel += string.Format("<Item><Id>{0}</Id><Name>{1}</Name></Item>", item.Id, item.Name);
                     }
                     strModel += "</Items>";
                     if (!string.IsNullOrEmpty(strModel))
@@ -205,7 +208,7 @@ namespace VT.Web.Controllers
                     {
                         strLocation += string.Format("<root><Item><Id>{0}</Id><Name>{1}</Name></Item></riit>", item.Id, item.Name);
                     }
-                    strLocation+= "</Items>";
+                    strLocation += "</Items>";
                     if (!string.IsNullOrEmpty(strLocation))
                         post.Location = strModel;
                     post.Lat = vm.Lat;
@@ -225,11 +228,43 @@ namespace VT.Web.Controllers
                     post.Horizontal = vm.Horizontal;
                     post.Vertical = vm.Vertical;
                     post.FullAddress = vm.FullAddress;
-                    PostItemServices.AddObject(post);
-                    return RedirectToAction("Index","Home");
+
+                    // dò tìm parent tỗng của danh mục
+                    var parentId = GetParentId(typeMenu.Id);
+                    if (typeMenu.Id != parentId.Id)
+                    {
+                        post.IdTypeParent = parentId.Id;
+                        post.TypeParentName = parentId.Name;
+                    }
+                    // thêm vào database
+                    post = PostItemServices.AddObject(post);
+                    List<MediaContent> lstMediaContent = new List<MediaContent>();
+                    Model.Type media = TypeServices.FindObject(x => x.Id == (int)EnumCore.TypeMediaContent.HinhAnhBaiDang && x.ObjectTypeId == (int)EnumCore.ObjectTypeId.LoaiMedia);
+                    var checkImgFirst = true;
+                    foreach (var item in lstImgForItem)
+                    {
+                        MediaContent m = new MediaContent();
+                        m.IdType = media.Id;
+                        m.TypeName = media.Name;
+                        m.ObjectTypeId = media.ObjectTypeId;
+                        m.ObjectName = media.ObjectTypeName;
+                        m.IdItem = post.Id;
+                        m.ItemName = post.Title;
+                        m.Urlthumbnail = item.Value;
+                        m.UrlFull = item.Key;
+                        m.Status = (int)EnumCore.StatusMediaContent.ChoPhep;
+                        if (checkImgFirst)
+                        {
+                            m.Active = true;
+                            checkImgFirst = false;
+                        }
+                        lstMediaContent.Add(m);
+                    }
+                    MediaContentService.AddRangeObject(lstMediaContent);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
-                    ModelState.AddModelError("","Bạn chưa tải hình của bài viết lên server");
+                    ModelState.AddModelError("", "Bạn chưa tải hình của bài viết lên server");
             }
             goCode: var lstDropDownProvince = new List<SelectListItem>();
             lstDropDownProvince.Add(new SelectListItem { Selected = true, Text = "Chọn Tỉnh - Thành" });
@@ -263,6 +298,20 @@ namespace VT.Web.Controllers
             base.Dispose(disposing);
         }
         #region Helpers
+
+        // lấy parent id
+        private Model.Type GetParentId(long id)
+        {
+            var obj = TypeServices.FindObject(x => x.Id == id);
+            if (obj.ParentId == null)
+            {
+                return obj;
+            }
+            else
+            {
+                return GetParentId(obj.Id);
+            }
+        }
         private AppCustomUserManager UserManager
         {
             get

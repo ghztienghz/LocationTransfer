@@ -31,9 +31,9 @@ namespace VT.Model
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<GeoArea> GeoAreas { get; set; }
-        public virtual DbSet<MediaContent> MediaContents { get; set; }
         public virtual DbSet<ObjectType> ObjectTypes { get; set; }
         public virtual DbSet<PostItem> PostItems { get; set; }
         public virtual DbSet<Type> Types { get; set; }
+        public virtual DbSet<MediaContent> MediaContents { get; set; }
     }
 }

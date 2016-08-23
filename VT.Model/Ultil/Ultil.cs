@@ -8,6 +8,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Web;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 namespace VT.Model.Ultil
 {
@@ -86,18 +87,21 @@ namespace VT.Model.Ultil
         /// <param name="pathImg">Đây là đường dẫn tới file sẽ crop làm ảnh thumb</param>
         /// <param name="Server">HttpServerUtilityBase giúp cho việc lưu trữ tại thư mục trên ổ cứng Server</param>
         /// <returns>trẻ về đường dẫn</returns>
-        public static string GetThumbImg(string pathImg, HttpServerUtilityBase Server)
+        public static string GetThumbImg(Size size, string pathImg, HttpServerUtilityBase Server)
         {
             try
             {
-                Image image = Image.FromFile(pathImg);
-                Image thumb = image.GetThumbnailImage(250, 250, () => false, IntPtr.Zero);
+                string fileName = Server.MapPath("..\\Media") + "\\" + pathImg;
+                Image image = Image.FromFile(fileName);
+                Image thumb = image.GetThumbnailImage(size.Width, size.Height, () => false, IntPtr.Zero);
                 string newFile = Server.MapPath("..\\Thumb") + "\\" + Path.GetFileName(pathImg);
                 if (!Directory.Exists(Server.MapPath("..\\Thumb")))
                 {
                     Directory.CreateDirectory(Server.MapPath("..\\Thumb"));
                 }
+
                 thumb.Save(newFile);
+                thumb.Dispose();
                 return "/Thumb/" + Path.GetFileName(pathImg);
             }
             catch (Exception ex)
@@ -105,16 +109,47 @@ namespace VT.Model.Ultil
                 return null;
             }
         }
-        /// <summary>
-        /// Tạo ảnh thum
-        /// imThumbnailImage = CreateThumbnail(OriginalImage, new Size(width, height))
-        /// </summary>
-        /// <param name="image">Image image = Image.FromFile(pathImg)</param>
-        /// <param name="thumbnailSize">Kích thước muốn cắt</param>
-        /// <param name="Server">HttpServerUtilityBase Dùng để nhận full đường dẫn tới thư mục ổ đĩa.</param>
-        /// <param name="fileName">tên của cái file thumb</param>
-        /// <returns>trả về đường dẫn tương đối của tấm ảnh thumb đã lưu</returns>
-        public static string CreateThumbnail(Image image, Size thumbnailSize, HttpServerUtilityBase Server, string fileName)
+
+
+        public static string GenerateThumbImg(Size size, string ImgFileName, HttpServerUtilityBase Server)
+        {
+            string fileName = Server.MapPath("..\\Media") + "\\" + ImgFileName;
+            string newFile = Server.MapPath("..\\Thumb") + "\\" + Path.GetFileName(ImgFileName);
+            using (var image = Image.FromFile(fileName)) /* Creates Image from specified data stream */
+            {
+                using (var thumb = image.GetThumbnailImage(
+                     size.Width, /* width*/
+                     size.Height, /* height*/
+                     () => false,
+                     IntPtr.Zero))
+                {
+                    var jpgInfo = ImageCodecInfo.GetImageEncoders().Where(codecInfo => codecInfo.MimeType == "image/png").First(); /* Returns array of image encoder objects built into GDI+ */
+                    using (var encParams = new EncoderParameters(1))
+                    {
+                        var appDataThumbnailPath = Server.MapPath("~/Thumb");
+                        if (!Directory.Exists(appDataThumbnailPath))
+                        {
+                            Directory.CreateDirectory(appDataThumbnailPath);
+                        }
+                        long quality = 100;
+                        encParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+                        thumb.Save(newFile, jpgInfo, encParams);
+                    }
+                }
+            }
+            return "/Thumb/" + Path.GetFileName(ImgFileName);
+        }
+
+    /// <summary>
+    /// Tạo ảnh thum
+    /// imThumbnailImage = CreateThumbnail(OriginalImage, new Size(width, height))
+    /// </summary>
+    /// <param name="image">Image image = Image.FromFile(pathImg)</param>
+    /// <param name="thumbnailSize">Kích thước muốn cắt</param>
+    /// <param name="Server">HttpServerUtilityBase Dùng để nhận full đường dẫn tới thư mục ổ đĩa.</param>
+    /// <param name="fileName">tên của cái file thumb</param>
+    /// <returns>trả về đường dẫn tương đối của tấm ảnh thumb đã lưu</returns>
+    public static string CreateThumbnail(Image image, Size thumbnailSize, HttpServerUtilityBase Server, string fileName)
         {
             try
             {

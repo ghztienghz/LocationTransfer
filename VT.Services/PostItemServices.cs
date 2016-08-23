@@ -21,6 +21,11 @@ namespace VT.Services
             return Post.AddObject(obj);
         }
 
+        public IEnumerable<PostItem> AddRangeObject(IEnumerable<PostItem> multiObject)
+        {
+            return Post.AddRangeObject(multiObject);
+        }
+
         public PostItem DeleteObject(PostItem obj)
         {
             return Post.DeleteObject(obj);

@@ -1,4 +1,5 @@
-﻿
+﻿@using VT.Model.ViewModel;
+@model LocationDetailViewModel
 @{
     ViewBag.Title = "Chi tiết";
 }
@@ -16,27 +17,15 @@
             </div>
             <div class="Wrap-box-content">
                 <div class="box-img-top-in-detail">
-                    <img src="~/Content/Images/Background-4.jpg" />
+                    <img class="img-show-main" src="@Model.LstMedia.SingleOrDefault(x=>x.Active).UrlFull" />
                 </div>
                 <div class="box-img-item-in-detail">
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
-                    <div class="item-thumb-img-in-detail">
-                        <img src="~/Content/Images/hinh-anh-thien-nhien-dep-nhat-th-gioi.jpg" />
-                    </div>
+                    @foreach (var item in Model.LstMedia.OrderBy(x => x.Active))
+                    {
+                        <div class="item-thumb-img-in-detail">
+                            <img class="click-change-img" src="@item.Urlthumbnail" data-full-url="@item.UrlFull" title="@item.ItemName" alt="@item.ItemName" />
+                        </div>
+                    }
                 </div>
             </div>
             <div class="wrap-box-info-location">
@@ -44,23 +33,24 @@
                     <div class="location-title">
                         <a href="#">SANG QUÁN ĂN MẶT TIỀN ĐƯỜNG BÌNH QUỚI</a>
                         <div class="location-info-size">
-                            Nhà hàng - Quán ăn - Mặt tiền: 5m2 - Chiều dài: 11 Q. Bình Thạnh-TP. HCM
+                            @Model.Post.TypeName - Mặt tiền: @(Model.Post.Horizontal)m - Chiều dài: @(Model.Post.Vertical)m @(Model.Post.WardName + ", " + Model.Post.DistrictName + ", " + Model.Post.ProvinceName)
                         </div>
                         <div class="location-infor-price-and-social">
                             <div class="location-infor-left-price">
                                 <span>
-                                    90 Triệu
+                                    @Model.Post.Price @Model.Post.UnitName
                                 </span>
                             </div>
                             <div class="location-infor-social">
                                 <div class="location-infor-social-item">
-
+                                    <!-- Đặt thẻ này vào nơi bạn muốn nút chia sẻ kết xuất. -->
+                                    <div class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
                                 </div>
                                 <div class="location-infor-social-item">
-
+                                    <div class="fb-like" data-href="https://www.facebook.com/giaitri.blogtamsu.vn/videos/vb.128286377233579/1406479442747593/?type=2&amp;theater&amp;notif_t=live_video&amp;notif_id=1471842020943021" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
                                 </div>
                                 <div class="location-infor-social-item">
-
+                                    <i class="fa fa-eye"></i> @Model.Post.CountView
                                 </div>
                             </div>
                         </div>
@@ -68,13 +58,13 @@
                 </div>
             </div>
             <div class="wrap-info-navigation">
-                Bạn đang xem tin <a href="#">Sang quán cơm</a> với tiêu đề
-                <a href="#">Cần sang gấp quán Cơm Tắm Minh Nhật trên đường Nguyễn Tiểu La Quận 10</a>
-                trên <a href="#">sangnhuong.com.vn</a>
+                Bạn đang xem tin <a href="#">@Model.Post.TypeName</a> với tiêu đề
+                <a href="@Url.Action("Details","Location",new { id = Model.Post.Id, FriendlyUrl = Model.Post.FriendlyUrl })">@Model.Post.Title</a>
+                trên <a href="/">123sangnhuong.com.vn</a>
             </div>
             <div class="wrap-infor-contact-location">
                 <span>
-                    <a href="tel:01684553333">Chị Thu      01684553333</a>
+                    <a href="tel:01684553333">@Model.Post.NameContact      @Model.Post.PhoneContact</a>
                 </span>
                 <span>
                     Vui lòng liên hệ
@@ -82,21 +72,13 @@
             </div>
             <div class="wrap-box-content-main">
                 <div class="wrap-box-content-main-title">
-                    <a href="#">Cần sang gấp quán Cơm Tắm Minh Nhật trên đường Nguyễn Tiểu La Quận 10</a>
+                    <a href="#">@Model.Post.Title</a>
                 </div>
                 <div class="wrap-box-content-main-text">
-                    Do không có người quản lý nên cần sang nhượng gấp Quán cơm tắm Minh Nhật có 2 căn kinh doanh cơm. Diện tích rộng rãi, 2 lầu 1 gác lửng, chỉ kinh doanh tầng trệt, còn 2 lầu có thể cho sinh viên thuê, khu vực để xe thỏa mái.
-                    Vị trí quán cực kỳ thuận lợi cho việc bán cơm, gần trường đại học, chợ, gần ngã tư, khu dân cư đông, sầm uất.
-                    Quán đã kinh doanh lâu năm nên lượng khách rất đông, ổn định, trang thiết bị và đồ dùng trong quán đầy đủ. Vào chỉ việc tiếp quản và kinh doanh ngay.
-
-                    Giá thuê mặt bằng đối với khu vực này cực rẻ, 2 căn chi 19 triệu/tháng
-                    Giá sang 90 triệu ( có thương lượng, bao gồm tiền cọc)
-                    Tiếp người thiện chí , miễn trung gian
-                    LH: Qua số điện thoại 01684553333 ( Chị Thu)
-                    0988965168
+                    @Model.Post.Description
                 </div>
                 <div class="wrap-box-content-main-contract">
-                    Hợp đồng còn hiệu lực: 2 năm
+                    Hợp đồng còn hiệu lực: @Model.Post.Exprires tháng
                 </div>
             </div>
             <div class="box-item-relationship">
@@ -109,22 +91,22 @@
                 <div class="SM-article-middle-left-content">
                     @for (int i = 0; i < 6; i++)
                     {
-                    <a href="#">
-                        <div class="SM-content-item-in-article">
-                            <div class="SM-c-i-in-a-img-box">
-                                <div class="SM-c-i-in-a-img" style="background:url('/Content/Images/item.jpg')"></div>
+                        <a href="#">
+                            <div class="SM-content-item-in-article">
+                                <div class="SM-c-i-in-a-img-box">
+                                    <div class="SM-c-i-in-a-img" style="background:url('/Content/Images/item.jpg')"></div>
+                                </div>
+                                <div class="SM-c-i-in-a-text-box">
+                                    <span>
+                                        Cần sang gấp quán Cơm Tắm Minh Nhật trên đường Nguyễn Tiểu La Quận 10
+                                    </span>
+                                </div>
+                                <div class="SM-c-i-in-a-box-price">
+                                    <b><i class="fa fa-bullhorn"></i>100 triệu</b>
+                                    <b><i class="fa fa-fort-awesome"></i> Quận 10</b>
+                                </div>
                             </div>
-                            <div class="SM-c-i-in-a-text-box">
-                                <span>
-                                    Cần sang gấp quán Cơm Tắm Minh Nhật trên đường Nguyễn Tiểu La Quận 10
-                                </span>
-                            </div>
-                            <div class="SM-c-i-in-a-box-price">
-                                <b><i class="fa fa-bullhorn"></i>100 triệu</b>
-                                <b><i class="fa fa-fort-awesome"></i> Quận 10</b>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
                     }
                 </div>
             </div>
@@ -147,3 +129,21 @@
         </article>
     </div>
 </div>
+
+<div id="fb-root"></div>
+@section scripts{
+    <script src="~/Scripts/Client/Location-Details.js"></script>
+    <!-- Đặt thẻ này vào phần đầu hoặc ngay trước thẻ đóng phần nội dung của bạn. -->
+    <!-- Đặt thẻ này vào phần đầu hoặc ngay trước thẻ đóng phần nội dung của bạn. -->
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        { lang: 'vi' }
+    </script>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7&appId=1159192317453802";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+}

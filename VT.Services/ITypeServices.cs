@@ -16,6 +16,7 @@ namespace VT.Services
         Model.Type FindObject(Expression<Func<Model.Type, bool>> func);
 
         Model.Type AddObject(Model.Type obj);
+        IEnumerable<Model.Type> AddRangeObject(IEnumerable<Model.Type> multiObject);
 
         Model.Type UpdateObject(Model.Type obj);
 

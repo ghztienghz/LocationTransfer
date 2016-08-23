@@ -54,8 +54,16 @@ namespace VT.Repository
 
         public TEntity UpdateObject(TEntity obj)
         {
-            db.Entry<TEntity>(obj).State = System.Data.Entity.EntityState.Modified;
-            return obj;
+            try
+            {
+                db.Entry<TEntity>(obj).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return obj;
+            }
+            catch (DbEntityValidationException e)
+            {
+                return null;
+            }
         }
 
         public TEntity FindObject(Expression<Func<TEntity, bool>> func)
@@ -68,6 +76,20 @@ namespace VT.Repository
         {
             IEnumerable<TEntity> lst = db.Set<TEntity>().RemoveRange(multiObj);
             return lst;
+        }
+
+        public IEnumerable<TEntity> AddRangeObject(IEnumerable<TEntity> multiObject)
+        {
+            try
+            {
+                var LstObj = db.Set<TEntity>().AddRange(multiObject);
+                db.SaveChanges();
+                return LstObj;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                return null;
+            }
         }
     }
 }
